@@ -2,12 +2,12 @@ name: Pull Talawa API Changes
 
 on:
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: "0 0 * * 0"
 
 jobs:
   pull:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout current repository
         uses: actions/checkout@v2
@@ -16,9 +16,34 @@ jobs:
         run: |
           git config --global user.email "${{ env.email }}"
           git config --global user.name "${{ github.actor }}"
-      
+
       - name: Run bash script
         run: |
           bash .github/workflows/pull-docs.sh
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # - name: Set up Git config
+      #   run: |
+      #     git config --global user.email "${{ env.email }}"
+      #     git config --global user.name "${{ github.actor }}"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.19.0"
+          channel: "stable"
+
+      - name: Install Dart
+        run: sudo apt-get update && sudo apt-get install dart
+
+      - name: Execute Script
+        run: |
+          chmod +x .github/workflows/pull-docs-mobile.sh
+          bash .github/workflows/pull-docs-mobile.sh
