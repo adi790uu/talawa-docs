@@ -2,7 +2,7 @@ name: Pull Talawa API Changes
 
 on:
   schedule:
-    - cron: "*"
+    - cron: "* * * * *"
 
 jobs:
   pull:
