@@ -14,7 +14,7 @@ jobs:
 
       - name: Set up Git config
         run: |
-          git config --global user.email "${{ env.email }}"
+          git config --global user.email "${{ env.USER_EMAIL }}"
           git config --global user.name "${{ github.actor }}"
 
       - name: Run bash script
@@ -30,10 +30,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # - name: Set up Git config
-      #   run: |
-      #     git config --global user.email "${{ env.email }}"
-      #     git config --global user.name "${{ github.actor }}"
+      - name: Set up Git config
+        run: |
+          git config --global user.email "${{ env.email }}"
+          git config --global user.name "${{ github.actor }}"
 
       - uses: subosito/flutter-action@v2
         with:
